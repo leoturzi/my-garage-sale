@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Garage Sale
+
+A clean, fast-loading public storefront for selling clothes and sneakers.
+
+**Stack:** Next.js 15 · Payload CMS v3 · Supabase (Postgres + Storage) · Tailwind CSS · Vercel
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Requires **Node.js 22** (see `.nvmrc`).
 
 ```bash
+nvm use           # switches to Node 22
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Public site: [http://localhost:3000](http://localhost:3000)
+- Admin panel: [http://localhost:3000/admin](http://localhost:3000/admin)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Copy `.env.local.example` to `.env.local` and fill in your Supabase and Payload credentials before running.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── (payload)/          # Payload CMS admin + API routes (own layout)
+│   ├── admin/          # Admin UI
+│   └── api/            # REST API
+└── (site)/             # Public storefront (own layout)
+collections/            # Payload collection definitions
+payload.config.ts       # Payload config (DB, collections, editor)
+next.config.ts          # Wrapped with withPayload()
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Each route group has its own root layout (`<html>/<body>`) to avoid hydration conflicts between Payload's admin UI and the public site.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See `PLAN.md` for the full architecture, data model, and phased rollout plan.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Gotchas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Node.js 22 required
+
+Payload CMS v3 requires Node.js 22+. The project includes an `.nvmrc` file — run `nvm use` to switch.
+
+### Next.js version pinned to 15.4.11
+
+Payload CMS v3 has a strict peer dependency on Next.js: `>=15.4.11 <15.5.0 || >=16.2.0-canary.10 <17.0.0`. The project is pinned to **15.4.11**.
+
+When Payload releases support for a newer Next.js stable, upgrade both together.
+
+### Payload migrations CLI vs push
+
+For development, Payload uses Drizzle `push` (enabled by default) to auto-sync the schema on `next dev`. The `npx payload migrate` CLI has a known incompatibility with Node 22 + tsx (top-level await in ESM). For production migrations, use Node 20 to run the CLI.
