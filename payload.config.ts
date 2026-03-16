@@ -7,13 +7,18 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { Users } from './collections/Users.ts'
 import { Media } from './collections/Media.ts'
+import { Categories } from './collections/Categories.ts'
+import { Products } from './collections/Products.ts'
+import { Hero } from './globals/Hero.ts'
+import { Settings } from './globals/Settings.ts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
   editor: lexicalEditor(),
-  collections: [Users, Media],
+  collections: [Users, Media, Categories, Products],
+  globals: [Hero, Settings],
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

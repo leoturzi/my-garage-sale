@@ -69,14 +69,15 @@ Why:
 | field | type | notes |
 |---|---|---|
 | name | text | |
-| brand | text | |
+| brand | text | Optional — works for any product type |
 | category | relationship | → categories |
 | description | textarea | Used in WhatsApp message pre-fill |
 | price | number | Displayed publicly |
 | condition | select | "New", "Like new", "Good", "Fair" |
-| size | text | Free-form ("M", "42", "XL") |
+| size | text | Free-form ("M", "42", "XL", "15 inch") — optional |
 | images | upload (Media, many) | Multiple photos |
-| whatsapp_number | text (global default) | Pre-filled in WA link |
+| tags | select (many) | "Sale", "Offer", "New arrival", "Last chance" — shown as badges |
+| details | array | Key/value pairs for flexible specs (e.g. Color: White, RAM: 16GB) |
 | status | select | "available" \| "sold" |
 
 ### `media` collection (Payload built-in upload)
@@ -184,8 +185,8 @@ PAYLOAD_SECRET=...                  # Random string, used to sign tokens
 | 1 | ~~Scaffold Next.js + Payload CMS v3 app~~ | ✅ Done — Next.js 15.4.11 scaffolded with Tailwind CSS. |
 | 2 | ~~Connect Payload to Supabase Postgres~~ | ✅ Done — Payload CMS v3 installed, wired to Supabase Postgres via `@payloadcms/db-postgres`. Admin panel live at `/admin`, first user registered. Schema auto-synced via Drizzle `push`. |
 | 3 | ~~Configure Supabase Storage (S3)~~ | ✅ Done — `@payloadcms/storage-s3@3.79.0` installed, `collections/Media.ts` created, S3 plugin configured in `payload.config.ts` with `forcePathStyle: true`. `garage-sale-media` bucket created (public) in Supabase Storage. S3 env vars added to `.env.local` — user needs to fill in access keys from Supabase dashboard. |
-| 4 | Define collections: Media, Categories, Products | Create collection files with all fields from the data model above. Register in `payload.config.ts`. |
-| 5 | Define globals: Hero, Settings | Create `Hero.ts` and `Settings.ts` globals and register them. |
+| 4 | ~~Define collections: Media, Categories, Products~~ | ✅ Done — `collections/Categories.ts` and `collections/Products.ts` created with all fields, access control, and slug auto-generation hook. Registered in `payload.config.ts`. |
+| 5 | ~~Define globals: Hero, Settings~~ | ✅ Done — `globals/Hero.ts` and `globals/Settings.ts` created and registered in `payload.config.ts`. |
 | 6 | Build landing page | `(site)/page.tsx` — hero section + category grid via Payload local API. |
 | 7 | Build category page | `(site)/[category]/page.tsx` — product grid, available-first, sold badge, WhatsApp button per product. |
 | 8 | Smoke-test CMS with admin user | Create first admin user, add a category + product with image, verify public site renders correctly. |

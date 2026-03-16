@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "check:importmap": "[ -f app/(payload)/admin/importMap.js ] || echo '⚠ importMap.js not found — it will be auto-generated on first run. If you see import errors in the admin panel, restart the dev server.'",
+    "check:importmap": "[ -f \"app/(payload)/admin/importMap.js\" ] || echo '⚠ importMap.js not found — it will be auto-generated on first run. If you see import errors in the admin panel, restart the dev server.'",
     "dev": "npm run check:importmap && next dev",
     "build": "npm run check:importmap && next build",
     "start": "next start",
