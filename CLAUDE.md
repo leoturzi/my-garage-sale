@@ -17,3 +17,15 @@ Find it in the Supabase dashboard via the **Connect** button at the top → sele
 
 ### Node version
 This project requires **Node 22** (see `.nvmrc`). Run `nvm use` before running commands.
+
+## Keeping `/project-context` up to date
+
+After any task that changes the project's structure — new directories, components, collections, globals, utilities, route groups, or architectural patterns — update `.claude/skills/project-context/SKILL.md` to reflect the change. This includes but is not limited to:
+
+- Adding/removing/renaming components, collections, globals, or route groups
+- Creating new directories (e.g. `utils/`, `hooks/`, `shared-types/`)
+- Changing the data model (new fields, new relationships)
+- New gotchas or patterns discovered (e.g. query workarounds, config quirks)
+- Changes to the image strategy, CSS theme, or data fetching approach
+
+Keep the skill concise — document *what exists and why*, not implementation details that can be read from the code.
