@@ -17,11 +17,20 @@ const conditionLabels: Record<string, string> = {
   fair: 'Fair',
 }
 
+function getCategorySlug(category: Product['category']): string | null {
+  if (typeof category === 'object' && category.slug) return category.slug
+  return null
+}
+
 export function ProductCard({ product }: { product: Product }) {
   const thumbUrl = getThumbUrl(product.images)
+  const categorySlug = getCategorySlug(product.category)
+  const href = categorySlug
+    ? `/categories/${categorySlug}/${product.id}`
+    : `/categories`
 
   return (
-    <Link href={`/products/${product.id}`} className="group block">
+    <Link href={href} className="group block">
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden bg-surface mb-2">
         {thumbUrl ? (

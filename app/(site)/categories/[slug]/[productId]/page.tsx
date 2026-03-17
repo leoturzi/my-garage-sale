@@ -12,15 +12,15 @@ import { ReviewsSection } from '@/components/ReviewsSection'
 import { FAQSection } from '@/components/FAQSection'
 
 interface PageProps {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string; productId: string }>
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { id } = await params
+  const { productId } = await params
 
   try {
     const payload = await getPayloadClient()
-    const raw = await payload.findByID({ collection: 'products', id: Number(id) })
+    const raw = await payload.findByID({ collection: 'products', id: Number(productId) })
     const product = raw as unknown as Product
 
     const firstImage =
@@ -51,13 +51,13 @@ function resolveImages(images: (Media | number)[] | undefined) {
 }
 
 export default async function ProductPage({ params }: PageProps) {
-  const { id } = await params
+  const { slug, productId } = await params
   const payload = await getPayloadClient()
 
   // 1. Fetch product
   let product: Product
   try {
-    const raw = await payload.findByID({ collection: 'products', id: Number(id) })
+    const raw = await payload.findByID({ collection: 'products', id: Number(productId) })
     product = raw as unknown as Product
   } catch {
     notFound()
@@ -71,6 +71,9 @@ export default async function ProductPage({ params }: PageProps) {
   } else {
     category = product.category
   }
+
+  // Validate that the slug matches the product's category
+  if (category.slug !== slug) notFound()
 
   // 3. Fetch related products (same category, excluding current)
   const relatedRaw = await payload.find({
