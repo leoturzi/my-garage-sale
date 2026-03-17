@@ -14,7 +14,7 @@ Why:
 - **Embeds directly into the Next.js app** — no second process, no Docker. One `next dev` runs both `/admin` and the public site.
 - **Native Postgres adapter** — official Supabase integration via `@payloadcms/db-postgres`.
 - **Image uploads to Supabase Storage** — via `@payloadcms/storage-s3` (Supabase exposes an S3-compatible API).
-- **Built-in auth** — admin is password-protected and accessible from anywhere, including mobile. Mark items as sold right after a sale from your phone.
+- **Built-in auth** — admin is password-protected. CMS runs locally; mark items as sold from your machine and redeploy.
 - **TypeScript-first** — collections are code files, version-controlled, no vendor lock-in.
 
 ---
@@ -22,24 +22,25 @@ Why:
 ## Architecture
 
 ```
-┌──────────────────────────────────────┐
-│  One Next.js app (deployed to Vercel)│
-│                                      │
-│  /admin  ──▶  Payload CMS (authed)   │
-│  /        ──▶  Public storefront     │
-└────────────────┬─────────────────────┘
-                 │ read/write
-         ┌───────▼────────┐
-         │   Supabase     │
-         │  Postgres DB   │
-         │  Storage (S3)  │
-         └────────────────┘
+LOCAL (your machine)                    DEPLOYED (Vercel)
+┌──────────────────────────┐           ┌──────────────────────┐
+│  next dev                │           │  Static site (SSG)   │
+│                          │           │                      │
+│  /admin  ──▶ Payload CMS │           │  /       (landing)   │
+│  /       ──▶ Storefront  │           │  /[cat]  (category)  │
+└────────────┬─────────────┘           └──────────────────────┘
+             │ read/write                      ▲
+     ┌───────▼────────┐                        │ static assets
+     │   Supabase     │               Images served directly
+     │  Postgres DB   │               from Supabase Storage
+     │  Storage (S3)  │               (public bucket URL)
+     └────────────────┘
 ```
 
-- Single Next.js app deployed to Vercel.
-- `/admin` is Payload's admin panel — password-protected, accessible from anywhere (laptop, phone).
-- Public site reads content via Payload's local API (zero HTTP overhead in server components).
-- Supabase holds all data (products, categories, hero) and all media (images).
+- **CMS is local-only.** Payload runs on your machine via `next dev`. You manage content (add products, mark sold, edit hero) locally, and it writes to Supabase.
+- **Deployed site is static.** The Vercel deployment is a pre-built static site (`next build` with SSG). No Payload admin panel, no server-side CMS in production.
+- **Supabase is the shared layer.** Both local CMS and the deployed site read from the same Supabase database. Images are served directly from the public Supabase Storage bucket.
+- **Workflow:** edit content locally → `next build` → deploy to Vercel. (Or push to GitHub and let Vercel rebuild automatically.)
 
 ---
 
@@ -50,8 +51,9 @@ Why:
 | Purchase flow | WhatsApp link per product, pre-filled with product name + description |
 | Sold items | Keep visible with a "SOLD" badge; available items listed first |
 | Pricing | Show price publicly on each product |
-| Admin access | Payload built-in auth — deployed to Vercel, accessible from anywhere |
-| Hosting | Vercel (public site + admin) + Supabase (DB + Storage) |
+| Admin access | Payload runs locally only — not deployed to production |
+| Hosting | Vercel (static public site only) + Supabase (DB + Storage) |
+| Deploy workflow | Edit content locally → push to GitHub → Vercel rebuilds static site |
 
 ---
 
@@ -190,7 +192,7 @@ PAYLOAD_SECRET=...                  # Random string, used to sign tokens
 | 6 | Build landing page | `(site)/page.tsx` — hero section + category grid via Payload local API. |
 | 7 | Build category page | `(site)/[category]/page.tsx` — product grid, available-first, sold badge, WhatsApp button per product. |
 | 8 | Smoke-test CMS with admin user | Create first admin user, add a category + product with image, verify public site renders correctly. |
-| 9 | Deploy to Vercel | Push to GitHub, create Vercel project, add all env vars, verify `/admin` and public site on live URL. |
+| 9 | Deploy to Vercel | Push to GitHub, create Vercel project, add env vars (Supabase only — no Payload secret needed in prod). Site is static (SSG), no CMS in production. |
 
 ### Phase 2 — Polish
 - [ ] Product detail page with image gallery
@@ -198,5 +200,5 @@ PAYLOAD_SECRET=...                  # Random string, used to sign tokens
 - [ ] Sort / filter by condition or size on category page
 
 ### Phase 3 — Optional
-- [ ] Payload `afterChange` hook → Vercel deploy webhook (instant revalidation when marking sold)
+- [ ] Script or alias to rebuild + deploy after content changes (e.g. mark item as sold locally, then one command to push)
 - [ ] Vercel Analytics
