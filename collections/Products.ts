@@ -60,6 +60,16 @@ export const Products: CollectionConfig = {
       hasMany: true,
     },
     {
+      name: 'ai_image_generator',
+      type: 'ui',
+      admin: {
+        custom: { targetFieldPath: 'images', hasMany: true },
+        components: {
+          Field: '/components/admin/AIImageGeneratorField#AIImageGeneratorField',
+        },
+      },
+    },
+    {
       name: 'tags',
       type: 'select',
       hasMany: true,

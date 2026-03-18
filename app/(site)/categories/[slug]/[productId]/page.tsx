@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
-import type { Product, Category, Media } from '@/lib/types'
+import type { Product, Category, Media, SettingsData } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { ProductImages } from '@/components/ProductImages'
 import { ProductInfo } from '@/components/ProductInfo'
@@ -28,10 +28,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
         ? (product.images[0] as Media)
         : null
 
+    const ogImageUrl = firstImage?.sizes?.card?.url ?? firstImage?.url
+
+    const title = `${product.name} | My Garage Sale`
+    const description =
+      product.description?.slice(0, 160) ?? `${product.name} — available at My Garage Sale`
+
     return {
-      title: `${product.name} | My Garage Sale`,
-      description: product.description?.slice(0, 160) ?? `${product.name} — available at My Garage Sale`,
-      openGraph: firstImage?.url ? { images: [{ url: firstImage.url }] } : undefined,
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        ...(ogImageUrl ? { images: [{ url: ogImageUrl }] } : {}),
+      },
     }
   } catch {
     return { title: 'Product Not Found' }
@@ -75,7 +85,11 @@ export default async function ProductPage({ params }: PageProps) {
   // Validate that the slug matches the product's category
   if (category.slug !== slug) notFound()
 
-  // 3. Fetch related products (same category, excluding current)
+  // 3. Fetch settings for WhatsApp number
+  const settingsRaw = await payload.findGlobal({ slug: 'settings' })
+  const settings = settingsRaw as unknown as SettingsData
+
+  // 4. Fetch related products (same category, excluding current)
   const relatedRaw = await payload.find({
     collection: 'products',
     where: {
@@ -154,7 +168,11 @@ export default async function ProductPage({ params }: PageProps) {
       {/* Product: Images + Info */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 pb-8">
         <ProductImages images={images} />
-        <ProductInfo product={product} />
+        <ProductInfo
+          product={product}
+          whatsappNumber={settings.whatsapp_number}
+          productUrl={`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/categories/${category.slug}/${product.id}`}
+        />
       </div>
 
       {/* Trust Badges */}

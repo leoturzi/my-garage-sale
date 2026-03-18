@@ -23,12 +23,14 @@ Why:
 
 ```
 LOCAL (your machine)                    DEPLOYED (Vercel)
-┌──────────────────────────┐           ┌──────────────────────┐
-│  next dev                │           │  Static site (SSG)   │
-│                          │           │                      │
-│  /admin  ──▶ Payload CMS │           │  /       (landing)   │
-│  /       ──▶ Storefront  │           │  /[cat]  (category)  │
-└────────────┬─────────────┘           └──────────────────────┘
+┌──────────────────────────┐           ┌────────────────────────────────┐
+│  next dev                │           │  Static site (SSG)             │
+│                          │           │                                │
+│  /admin  ──▶ Payload CMS │           │  /                  (landing)  │
+│  /       ──▶ Storefront  │           │  /categories        (browse)   │
+│                          │           │  /categories/[slug]  (grid)    │
+│                          │           │  /categories/[slug]/[id] (PDP) │
+└────────────┬─────────────┘           └────────────────────────────────┘
              │ read/write                      ▲
      ┌───────▼────────┐                        │ static assets
      │   Supabase     │               Images served directly
@@ -120,14 +122,18 @@ This is generated at render time in the server component — no API call needed.
 - Hero section (from `hero` global)
 - Category grid with cover images
 
-### `/[categorySlug]` — Category page
+### `/categories` — All categories
+- Browse all categories page with category cards
+
+### `/categories/[slug]` — Category page
 - Product grid for that category
 - Available items first, sold items at the bottom with "SOLD" badge overlay
 - Each card shows: image, name, brand, size, condition, price, WA button
 
-### `/[categorySlug]/[productId]` — Product detail *(Phase 2)*
+### `/categories/[slug]/[productId]` — Product detail
 - Full image gallery
-- Full description
+- Breadcrumbs navigation
+- Full description + product info
 - WhatsApp CTA
 
 ---
@@ -137,22 +143,34 @@ This is generated at render time in the server component — no API call needed.
 ```
 my-garage-sale/
 ├── app/
-│   ├── (payload)/                  # Payload admin routes
-│   │   ├── admin/[[...segments]]/  # Admin UI pages
-│   │   ├── api/[...slug]/          # REST/GraphQL API
-│   │   ├── layout.tsx              # Payload root layout (own <html>)
+│   ├── (payload)/                           # Payload admin routes
+│   │   ├── admin/[[...segments]]/           # Admin UI pages
+│   │   ├── api/[...slug]/                   # REST/GraphQL API
+│   │   ├── layout.tsx                       # Payload root layout (own <html>)
 │   │   └── custom.scss
-│   └── (site)/                     # Public storefront
-│       ├── layout.tsx              # Site root layout (own <html>)
+│   └── (site)/                              # Public storefront
+│       ├── layout.tsx                       # Site root layout (own <html>)
 │       ├── globals.css
-│       ├── page.tsx                # Landing page
-│       └── [category]/
-│           └── page.tsx            # Category page
+│       ├── page.tsx                         # Landing page
+│       └── categories/
+│           ├── page.tsx                     # All categories
+│           └── [slug]/
+│               ├── page.tsx                 # Category product grid
+│               └── [productId]/
+│                   └── page.tsx             # Product detail page
+├── components/                              # Shared UI components
+│   ├── Header.tsx, Footer.tsx               # Layout
+│   ├── HeroSection.tsx                      # Landing hero
+│   ├── CategoryCard.tsx, CategoryGrid.tsx   # Category display
+│   ├── ProductCard.tsx, ProductGrid.tsx     # Product listing
+│   ├── ProductImages.tsx, ProductInfo.tsx   # Product detail
+│   ├── Breadcrumbs.tsx, Badge.tsx           # Navigation / UI
+│   └── ...                                  # More UI components
 ├── collections/
-│   └── Users.ts                    # Admin auth (registered)
+│   └── Users.ts                             # Admin auth (registered)
 ├── payload.config.ts
-├── .env.local                      # DB URI, Payload secret (never committed)
-└── next.config.ts                  # Wrapped with withPayload()
+├── .env.local                               # DB URI, Payload secret (never committed)
+└── next.config.ts                           # Wrapped with withPayload()
 ```
 
 ---
@@ -189,13 +207,14 @@ PAYLOAD_SECRET=...                  # Random string, used to sign tokens
 | 3 | ~~Configure Supabase Storage (S3)~~ | ✅ Done — `@payloadcms/storage-s3@3.79.0` installed, `collections/Media.ts` created, S3 plugin configured in `payload.config.ts` with `forcePathStyle: true`. `garage-sale-media` bucket created (public) in Supabase Storage. S3 env vars added to `.env.local` — user needs to fill in access keys from Supabase dashboard. |
 | 4 | ~~Define collections: Media, Categories, Products~~ | ✅ Done — `collections/Categories.ts` and `collections/Products.ts` created with all fields, access control, and slug auto-generation hook. Registered in `payload.config.ts`. |
 | 5 | ~~Define globals: Hero, Settings~~ | ✅ Done — `globals/Hero.ts` and `globals/Settings.ts` created and registered in `payload.config.ts`. |
-| 6 | Build landing page | `(site)/page.tsx` — hero section + category grid via Payload local API. |
-| 7 | Build category page | `(site)/[category]/page.tsx` — product grid, available-first, sold badge, WhatsApp button per product. |
-| 8 | Smoke-test CMS with admin user | Create first admin user, add a category + product with image, verify public site renders correctly. |
-| 9 | Deploy to Vercel | Push to GitHub, create Vercel project, add env vars (Supabase only — no Payload secret needed in prod). Site is static (SSG), no CMS in production. |
+| 6 | ~~Build landing page~~ | ✅ Done — `(site)/page.tsx` with hero section, category grid, value props, spotlight section, brand marquee, reviews, FAQ, and trust badges. |
+| 7 | ~~Build category page~~ | ✅ Done — `(site)/categories/[slug]/page.tsx` with product grid, available-first sorting, sold badge overlay, breadcrumbs. Also added `(site)/categories/page.tsx` for browsing all categories. |
+| 8 | ~~Build product detail page~~ | ✅ Done — `(site)/categories/[slug]/[productId]/page.tsx` with image gallery, product info, breadcrumbs, WhatsApp CTA. Components: `ProductImages.tsx`, `ProductInfo.tsx`. |
+| 9 | Smoke-test CMS with admin user | Create first admin user, add a category + product with image, verify public site renders correctly. |
+| 10 | Deploy to Vercel | Push to GitHub, create Vercel project, add env vars (Supabase only — no Payload secret needed in prod). Site is static (SSG), no CMS in production. |
 
 ### Phase 2 — Polish
-- [ ] Product detail page with image gallery
+- [x] Product detail page with image gallery
 - [ ] Mobile layout refinement
 - [ ] Sort / filter by condition or size on category page
 

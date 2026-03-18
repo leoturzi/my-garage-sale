@@ -48,6 +48,16 @@ export const Categories: CollectionConfig = {
       relationTo: 'media',
     },
     {
+      name: 'ai_image_generator',
+      type: 'ui',
+      admin: {
+        custom: { targetFieldPath: 'cover_image', hasMany: false },
+        components: {
+          Field: '/components/admin/AIImageGeneratorField#AIImageGeneratorField',
+        },
+      },
+    },
+    {
       name: 'sort_order',
       type: 'number',
       defaultValue: 0,

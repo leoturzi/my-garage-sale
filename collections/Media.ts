@@ -30,5 +30,14 @@ export const Media: CollectionConfig = {
       type: 'text',
       required: true,
     },
+    {
+      name: 'ai_image_generator',
+      type: 'ui',
+      admin: {
+        components: {
+          Field: '/components/admin/AIImageGeneratorField#AIImageGeneratorField',
+        },
+      },
+    },
   ],
 }
