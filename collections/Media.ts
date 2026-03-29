@@ -3,7 +3,7 @@ import type { CollectionConfig } from 'payload'
 export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    mimeTypes: ['image/*'],
+    mimeTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
     imageSizes: [
       {
         name: 'thumbnail',
@@ -20,6 +20,16 @@ export const Media: CollectionConfig = {
     ],
     adminThumbnail: 'thumbnail',
     focalPoint: true,
+  },
+  hooks: {
+    beforeChange: [
+      ({ req }) => {
+        const file = req.file
+        if (file && file.size > 10 * 1024 * 1024) {
+          throw new Error('File size must not exceed 10 MB')
+        }
+      },
+    ],
   },
   access: {
     read: () => true,
