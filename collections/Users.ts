@@ -6,6 +6,9 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
+  access: {
+    admin: ({ req }) => req.user?.role === 'admin',
+  },
   fields: [
     {
       name: 'role',
@@ -16,6 +19,9 @@ export const Users: CollectionConfig = {
         { label: 'Admin', value: 'admin' },
         { label: 'Editor', value: 'editor' },
       ],
+      access: {
+        update: ({ req }) => req.user?.role === 'admin',
+      },
       admin: {
         position: 'sidebar',
       },
