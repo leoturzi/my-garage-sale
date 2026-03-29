@@ -54,11 +54,12 @@ export default buildConfig({
   plugins: [
     s3Storage({
       collections: {
-        media: true,
+        media: {
+          generateFileURL: ({ filename }) =>
+            `https://seswpytxueftfgvipzcb.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${filename}`,
+        },
       },
       bucket: process.env.S3_BUCKET!,
-      generateFileURL: ({ filename }) =>
-        `https://seswpytxueftfgvipzcb.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${filename}`,
       config: {
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID!,
