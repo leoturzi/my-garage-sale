@@ -27,18 +27,27 @@ Copy `.env.local.example` to `.env.local` and fill in your Supabase and Payload 
 
 ```
 app/
-├── (payload)/          # Payload CMS admin + API routes (own layout)
-│   ├── admin/          # Admin UI
-│   └── api/            # REST API
-└── (site)/             # Public storefront (own layout)
-collections/            # Payload collection definitions
+├── (payload)/                          # Payload CMS admin + API routes (own layout)
+│   ├── admin/                          # Admin UI
+│   └── api/
+│       ├── [...slug]/                  # Payload REST API (auto-generated)
+│       └── generate-image/             # AI image generation endpoint (Gemini)
+└── (site)/                             # Public storefront (own layout)
+    ├── page.tsx                        # Landing page
+    └── categories/
+        ├── page.tsx                    # All categories listing
+        ├── [slug]/page.tsx             # Products in a category
+        └── [slug]/[productId]/page.tsx # Product detail page (PDP)
+collections/            # Payload collection definitions (Categories, Products, Media, Users)
+globals/                # Payload globals (Hero, Settings)
+components/             # UI components (site + admin)
+lib/                    # Payload client, types
 payload.config.ts       # Payload config (DB, collections, editor)
 next.config.ts          # Wrapped with withPayload()
+middleware.ts           # Next.js middleware
 ```
 
 Each route group has its own root layout (`<html>/<body>`) to avoid hydration conflicts between Payload's admin UI and the public site.
-
-See `PLAN.md` for the full architecture, data model, and phased rollout plan.
 
 ---
 
@@ -53,6 +62,10 @@ Payload CMS v3 requires Node.js 22+. The project includes an `.nvmrc` file — r
 Payload CMS v3 has a strict peer dependency on Next.js: `>=15.4.11 <15.5.0 || >=16.2.0-canary.10 <17.0.0`. The project is pinned to **15.4.11**.
 
 When Payload releases support for a newer Next.js stable, upgrade both together.
+
+### Supabase direct connection is IPv6-only
+
+The default Supabase direct connection string (`db.<ref>.supabase.co`) uses IPv6. Most local networks and platforms like Vercel are IPv4-only, so DNS won't resolve it. Use the **Session pooler** connection string instead. Find it in the Supabase dashboard via the **Connect** button at the top → select **Session mode**.
 
 ### Payload migrations CLI vs push
 

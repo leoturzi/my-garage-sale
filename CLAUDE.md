@@ -1,29 +1,27 @@
-# My Garage Sale
+# My Garage Sale — Rules
 
-## Gotchas
+## Workflow rules
 
-### Supabase direct connection is IPv6-only
+- Run `nvm use` before running any commands (Node 22 required).
+- Use the **Session pooler** connection string for Supabase, not the direct connection (IPv6-only, won't resolve on most networks). Find it in the dashboard via **Connect** → **Session mode**.
 
-The default Supabase direct connection string (`db.<ref>.supabase.co`) uses IPv6. Most local networks and platforms like Vercel are IPv4-only, so DNS won't resolve it. Use the **Session pooler** connection string instead:
+## Keeping docs up to date
 
-```
-postgresql://postgres.<ref>:[PASSWORD]@aws-1-sa-east-1.pooler.supabase.com:5432/postgres
-```
+After any task that changes the project's structure, update the relevant doc:
 
-Find it in the Supabase dashboard via the **Connect** button at the top → select **Session mode**.
+### `README.md` (source of truth for project overview)
 
-### Node version
+Update when:
+- Adding/removing/renaming routes, pages, or API endpoints
+- Changes to the project structure tree
+- New gotchas or setup steps
+- Changes to the tech stack or dependencies
 
-This project requires **Node 22** (see `.nvmrc`). Run `nvm use` before running commands.
+### `.claude/skills/project-context/SKILL.md` (deep context for Claude)
 
-## Keeping `/project-context` up to date
-
-After any task that changes the project's structure — new directories, components, collections, globals, utilities, route groups, or architectural patterns — update `.claude/skills/project-context/SKILL.md` to reflect the change. This includes but is not limited to:
-
-- Adding/removing/renaming components, collections, globals, or route groups
-- Creating new directories (e.g. `utils/`, `hooks/`, `shared-types/`)
+Update when:
+- Adding/removing/renaming components, collections, or globals
 - Changing the data model (new fields, new relationships)
-- New gotchas or patterns discovered (e.g. query workarounds, config quirks)
-- Changes to the image strategy, CSS theme, or data fetching approach
+- Changes to data fetching patterns, image strategy, or CSS theme
 
-Keep the skill concise — document _what exists and why_, not implementation details that can be read from the code.
+Do not duplicate information that already lives in `README.md` — SKILL.md should reference the README for project overview and focus only on implementation details Claude needs to work autonomously.
