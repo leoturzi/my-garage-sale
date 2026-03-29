@@ -123,25 +123,25 @@ export default async function ProductPage({ params }: PageProps) {
   const accordionItems = [
     product.description
       ? {
-          title: 'Description',
-          defaultOpen: true,
-          content: <p className="whitespace-pre-line">{product.description}</p>,
-        }
+        title: 'Description',
+        defaultOpen: true,
+        content: <p className="whitespace-pre-line">{product.description}</p>,
+      }
       : null,
     product.details && product.details.length > 0
       ? {
-          title: 'Details',
-          content: (
-            <div className="grid grid-cols-2 gap-x-8 gap-y-2">
-              {product.details.map((d, i) => (
-                <div key={i} className="flex justify-between col-span-2 sm:col-span-1">
-                  <span className="font-medium text-foreground">{d.label}</span>
-                  <span>{d.value}</span>
-                </div>
-              ))}
-            </div>
-          ),
-        }
+        title: 'Details',
+        content: (
+          <div className="grid grid-cols-2 gap-x-8 gap-y-2">
+            {product.details.map((d, i) => (
+              <div key={i} className="flex justify-between col-span-2 sm:col-span-1">
+                <span className="font-medium text-foreground">{d.label}</span>
+                <span>{d.value}</span>
+              </div>
+            ))}
+          </div>
+        ),
+      }
       : null,
     {
       title: 'Shipping & Returns',
@@ -174,7 +174,7 @@ export default async function ProductPage({ params }: PageProps) {
         <ProductInfo
           product={product}
           whatsappNumber={settings.whatsapp_number}
-          productUrl={`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/categories/${category.slug}/${product.id}`}
+          productUrl={`${process.env.NEXT_PUBLIC_SITE_URL!}/categories/${category.slug}/${product.id}`}
         />
       </div>
 

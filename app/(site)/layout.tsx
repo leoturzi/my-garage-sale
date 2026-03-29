@@ -1,6 +1,6 @@
+import './globals.css'
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
-import './globals.css'
 import { getPayloadClient } from '@/lib/payload'
 import type { Category, SettingsData } from '@/lib/types'
 import { AnnouncementBar } from '@/components/AnnouncementBar'
@@ -13,7 +13,7 @@ const geistSans = Geist({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
   title: 'My Garage Sale',
   description: 'Quality second-hand items at unbeatable prices',
 }
