@@ -15,7 +15,7 @@
 4. **Plan** — outline the implementation approach.
 5. **Implement** — write the code.
 6. **Test** — verify changes work before committing.
-7. **Push + open PR** — push the branch and create a PR to `develop`.
+7. **Push + open PR** — push the branch and create a PR to `main`.
 
 ### Parallel vs sequential
 
