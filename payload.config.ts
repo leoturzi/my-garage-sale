@@ -56,7 +56,7 @@ export default buildConfig({
       collections: {
         media: {
           generateFileURL: ({ filename }) =>
-            `https://seswpytxueftfgvipzcb.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${filename}`,
+            `${process.env.S3_ENDPOINT}/object/public/${process.env.S3_BUCKET}/${filename}`,
         },
       },
       bucket: process.env.S3_BUCKET!,
