@@ -1,9 +1,11 @@
 import type { GlobalConfig } from 'payload'
+import { isAdmin } from '@/lib/access'
 
 export const Settings: GlobalConfig = {
   slug: 'settings',
   access: {
     read: () => true,
+    update: isAdmin,
   },
   fields: [
     {
