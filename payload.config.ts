@@ -20,6 +20,14 @@ export default buildConfig({
   collections: [Users, Media, Categories, Products],
   globals: [Hero, Settings],
   secret: process.env.PAYLOAD_SECRET || '',
+  cors: [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    'http://localhost:3000',
+  ].filter(Boolean) as string[],
+  csrf: [
+    process.env.NEXT_PUBLIC_SITE_URL,
+    'http://localhost:3000',
+  ].filter(Boolean) as string[],
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
