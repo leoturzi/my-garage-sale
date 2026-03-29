@@ -6,8 +6,9 @@ import { ValueProps } from '@/components/ValueProps'
 import { ProductGrid } from '@/components/ProductGrid'
 import { BrandMarquee } from '@/components/BrandMarquee'
 import { SpotlightSection } from '@/components/SpotlightSection'
+import { REVALIDATE_INTERVAL } from '@/lib/constants'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_INTERVAL
 
 export default async function Home() {
   const payload = await getPayloadClient()

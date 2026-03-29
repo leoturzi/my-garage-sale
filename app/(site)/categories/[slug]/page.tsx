@@ -4,8 +4,9 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Product, Category } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { ProductCard } from '@/components/ProductCard'
+import { REVALIDATE_INTERVAL } from '@/lib/constants'
 
-export const revalidate = 60
+export const revalidate = REVALIDATE_INTERVAL
 export const dynamicParams = true
 
 interface PageProps {
