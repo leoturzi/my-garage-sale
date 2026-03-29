@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/lib/access'
 
 export const Products: CollectionConfig = {
   slug: 'products',
@@ -9,9 +10,9 @@ export const Products: CollectionConfig = {
   defaultSort: '-createdAt',
   access: {
     read: () => true,
-    create: ({ req }) => Boolean(req.user),
-    update: ({ req }) => Boolean(req.user),
-    delete: ({ req }) => Boolean(req.user),
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   fields: [
     {

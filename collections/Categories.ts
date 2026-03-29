@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { isAdmin } from '@/lib/access'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -8,9 +9,9 @@ export const Categories: CollectionConfig = {
   defaultSort: 'sort_order',
   access: {
     read: () => true,
-    create: ({ req }) => Boolean(req.user),
-    update: ({ req }) => Boolean(req.user),
-    delete: ({ req }) => Boolean(req.user),
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
   },
   hooks: {
     beforeValidate: [
