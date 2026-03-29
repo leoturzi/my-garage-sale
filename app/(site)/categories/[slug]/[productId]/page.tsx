@@ -10,6 +10,10 @@ import { Accordion } from '@/components/Accordion'
 import { ProductGrid } from '@/components/ProductGrid'
 import { ReviewsSection } from '@/components/ReviewsSection'
 import { FAQSection } from '@/components/FAQSection'
+import { REVALIDATE_INTERVAL } from '@/lib/constants'
+
+export const revalidate = REVALIDATE_INTERVAL
+export const dynamicParams = true
 
 interface PageProps {
   params: Promise<{ slug: string; productId: string }>

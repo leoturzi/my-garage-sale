@@ -3,6 +3,9 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Category } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { CategoryCard } from '@/components/CategoryCard'
+import { REVALIDATE_INTERVAL } from '@/lib/constants'
+
+export const revalidate = REVALIDATE_INTERVAL
 
 export const metadata: Metadata = {
   title: 'Categories | My Garage Sale',
