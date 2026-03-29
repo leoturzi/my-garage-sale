@@ -12,6 +12,21 @@ import { Products } from './collections/Products.ts'
 import { Hero } from './globals/Hero.ts'
 import { Settings } from './globals/Settings.ts'
 
+const requiredEnv = [
+  'DATABASE_URI',
+  'PAYLOAD_SECRET',
+  'S3_BUCKET',
+  'S3_ACCESS_KEY_ID',
+  'S3_SECRET_ACCESS_KEY',
+  'S3_REGION',
+  'S3_ENDPOINT',
+]
+
+const missing = requiredEnv.filter((key) => !process.env[key])
+if (missing.length > 0) {
+  throw new Error(`Missing required env vars: ${missing.join(', ')}`)
+}
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -19,7 +34,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   collections: [Users, Media, Categories, Products],
   globals: [Hero, Settings],
-  secret: process.env.PAYLOAD_SECRET || '',
+  secret: process.env.PAYLOAD_SECRET!,
   cors: [
     process.env.NEXT_PUBLIC_SITE_URL,
     'http://localhost:3000',
@@ -33,7 +48,7 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URI!,
     },
   }),
   sharp,
@@ -42,14 +57,14 @@ export default buildConfig({
       collections: {
         media: true,
       },
-      bucket: process.env.S3_BUCKET || '',
+      bucket: process.env.S3_BUCKET!,
       config: {
         credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
         },
-        endpoint: process.env.S3_ENDPOINT || '',
-        region: process.env.S3_REGION || '',
+        endpoint: process.env.S3_ENDPOINT!,
+        region: process.env.S3_REGION!,
         forcePathStyle: true,
       },
     }),
