@@ -50,26 +50,25 @@ export default async function CategoryPage({ params }: PageProps) {
   if (!category) notFound()
 
   // Fetch products: available first, then sold
-  const [availableRaw, soldRaw] = await Promise.all([
-    payload.find({
-      collection: 'products',
-      where: {
-        category: { equals: category.id },
-        status: { equals: 'available' },
-      },
-      sort: '-createdAt',
-      limit: 100,
-    }),
-    payload.find({
-      collection: 'products',
-      where: {
-        category: { equals: category.id },
-        status: { equals: 'sold' },
-      },
-      sort: '-createdAt',
-      limit: 100,
-    }),
-  ])
+  // Sequential — session pooler has limited concurrent connections
+  const availableRaw = await payload.find({
+    collection: 'products',
+    where: {
+      category: { equals: category.id },
+      status: { equals: 'available' },
+    },
+    sort: '-createdAt',
+    limit: 100,
+  })
+  const soldRaw = await payload.find({
+    collection: 'products',
+    where: {
+      category: { equals: category.id },
+      status: { equals: 'sold' },
+    },
+    sort: '-createdAt',
+    limit: 100,
+  })
 
   const available = availableRaw.docs as unknown as Product[]
   const sold = soldRaw.docs as unknown as Product[]

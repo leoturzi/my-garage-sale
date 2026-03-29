@@ -47,6 +47,7 @@ export default buildConfig({
   db: postgresAdapter({
     pool: {
       connectionString: process.env.DATABASE_URI!,
+      max: 1,
     },
   }),
   sharp,
@@ -56,6 +57,8 @@ export default buildConfig({
         media: true,
       },
       bucket: process.env.S3_BUCKET!,
+      generateFileURL: ({ filename }) =>
+        `https://seswpytxueftfgvipzcb.supabase.co/storage/v1/object/public/${process.env.S3_BUCKET}/${filename}`,
       config: {
         credentials: {
           accessKeyId: process.env.S3_ACCESS_KEY_ID!,
