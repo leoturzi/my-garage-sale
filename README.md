@@ -44,7 +44,6 @@ components/             # UI components (site + admin)
 lib/                    # Payload client, types, access helpers
 payload.config.ts       # Payload config (DB, collections, editor)
 next.config.ts          # Wrapped with withPayload()
-middleware.ts           # Next.js middleware
 ```
 
 Each route group has its own root layout (`<html>/<body>`) to avoid hydration conflicts between Payload's admin UI and the public site.
