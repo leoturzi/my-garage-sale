@@ -50,7 +50,7 @@ export default async function Home() {
       <HeroSection hero={hero} />
       <CategoryGrid categories={categories} />
       <ValueProps />
-      <ProductGrid title="Just Added" ctaLabel="View All" ctaHref="/products" products={justAdded} />
+      <ProductGrid title="Just Added" ctaLabel="View All" ctaHref="/categories" products={justAdded} />
       <BrandMarquee brands={brands} />
       <SpotlightSection categories={spotlightCategories} />
       <ProductGrid title="On Sale" products={saleProducts} />
