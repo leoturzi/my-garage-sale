@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
         headers: [...sharedHeaders, { key: 'Content-Security-Policy', value: adminCSP }],
       },
       {
-        source: '/:path*',
+        source: '/((?!admin).*)',
         headers: [...sharedHeaders, { key: 'Content-Security-Policy', value: publicCSP }],
       },
     ]
