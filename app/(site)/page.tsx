@@ -7,6 +7,8 @@ import { ProductGrid } from '@/components/ProductGrid'
 import { BrandMarquee } from '@/components/BrandMarquee'
 import { SpotlightSection } from '@/components/SpotlightSection'
 
+export const revalidate = 60
+
 export default async function Home() {
   const payload = await getPayloadClient()
 

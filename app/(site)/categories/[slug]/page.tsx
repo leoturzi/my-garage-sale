@@ -5,6 +5,9 @@ import type { Product, Category } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { ProductCard } from '@/components/ProductCard'
 
+export const revalidate = 60
+export const dynamicParams = true
+
 interface PageProps {
   params: Promise<{ slug: string }>
 }

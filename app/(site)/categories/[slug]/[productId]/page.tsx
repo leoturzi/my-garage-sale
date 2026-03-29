@@ -11,6 +11,9 @@ import { ProductGrid } from '@/components/ProductGrid'
 import { ReviewsSection } from '@/components/ReviewsSection'
 import { FAQSection } from '@/components/FAQSection'
 
+export const revalidate = 60
+export const dynamicParams = true
+
 interface PageProps {
   params: Promise<{ slug: string; productId: string }>
 }

@@ -4,6 +4,8 @@ import type { Category } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { CategoryCard } from '@/components/CategoryCard'
 
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'Categories | My Garage Sale',
   description: 'Browse all categories — quality second-hand items at great prices.',
