@@ -41,7 +41,7 @@ app/
 collections/            # Payload collection definitions (Categories, Products, Media, Users)
 globals/                # Payload globals (Hero, Settings)
 components/             # UI components (site + admin)
-lib/                    # Payload client, types
+lib/                    # Payload client, types, access helpers
 payload.config.ts       # Payload config (DB, collections, editor)
 next.config.ts          # Wrapped with withPayload()
 middleware.ts           # Next.js middleware
