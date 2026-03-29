@@ -11,8 +11,8 @@ export async function POST(req: Request) {
 
   const hdrs = await nextHeaders()
   const { user } = await payload.auth({ headers: hdrs })
-  if (!user) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 })
+  if (!user || user.role !== 'admin') {
+    return Response.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   const apiKey = process.env.GEMINI_API_KEY
@@ -25,6 +25,26 @@ export async function POST(req: Request) {
 
   if (!modelImage || !productImage) {
     return Response.json({ error: 'Both modelImage and productImage are required' }, { status: 400 })
+  }
+
+  // Validate prompt length
+  if (prompt && typeof prompt === 'string' && prompt.length > 1000) {
+    return Response.json({ error: 'Prompt must be 1000 characters or less' }, { status: 400 })
+  }
+
+  // Validate MIME types
+  const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif']
+  if (modelMimeType && !allowedMimeTypes.includes(modelMimeType)) {
+    return Response.json({ error: 'Invalid modelMimeType' }, { status: 400 })
+  }
+  if (productMimeType && !allowedMimeTypes.includes(productMimeType)) {
+    return Response.json({ error: 'Invalid productMimeType' }, { status: 400 })
+  }
+
+  // Validate base64 payload size (10MB per image)
+  const maxBase64Size = 10 * 1024 * 1024 * 1.37 // ~10MB in base64
+  if (modelImage.length > maxBase64Size || productImage.length > maxBase64Size) {
+    return Response.json({ error: 'Image payload must not exceed 10MB' }, { status: 400 })
   }
 
   try {
