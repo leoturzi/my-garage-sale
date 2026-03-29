@@ -3,7 +3,10 @@
 ## Workflow rules
 
 - Run `nvm use` before running any commands (Node 22 required).
-- Use the **Session pooler** connection string for Supabase, not the direct connection (IPv6-only, won't resolve on most networks). Find it in the dashboard via **Connect** → **Session mode**.
+- Use different Supabase connection strings for local vs production:
+  - **Local** (`.env.local`): **Session pooler** (port 5432) — Connect → Session mode.
+  - **Production** (Vercel env vars): **Transaction pooler** (port 6543) — Connect → Transaction mode. Required for serverless: each Vercel function invocation creates its own pg-pool, and session mode exhausts connection limits under concurrent load.
+  - Never use the Direct Connection (IPv6-only, won't resolve on most networks).
 
 ## Task workflow
 
