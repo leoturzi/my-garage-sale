@@ -6,5 +6,19 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  fields: [],
+  fields: [
+    {
+      name: 'role',
+      type: 'select',
+      required: true,
+      defaultValue: 'editor',
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Editor', value: 'editor' },
+      ],
+      admin: {
+        position: 'sidebar',
+      },
+    },
+  ],
 }
