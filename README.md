@@ -73,7 +73,7 @@ Use different pooler modes for each environment (found in the Supabase dashboard
 | Local (`.env.local`) | **Session pooler** | 5432 | Long-lived process, one persistent pool |
 | Production (Vercel) | **Transaction pooler** | 6543 | Serverless: each invocation creates a new pg-pool; transaction mode releases connections back after each transaction, preventing exhaustion |
 
-The pool is also capped at `max: 1` in `payload.config.ts` as an additional guard.
+The Transaction pooler (PgBouncer) manages actual Postgres connections server-side, so serverless functions can use the default pool size without exhausting the database connection limit.
 
 ### Payload migrations CLI vs push
 
