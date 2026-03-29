@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  const allowedIps = process.env.ALLOWED_ADMIN_IPS?.split(',').map((ip) => ip.trim()) ?? []
+  const allowedIps = process.env.ALLOWED_ADMIN_IPS?.split(',').map((ip) => ip.trim()).filter(Boolean) ?? []
 
   const ip =
     request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ??
