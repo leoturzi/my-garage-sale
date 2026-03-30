@@ -1,7 +1,7 @@
 import { withPayload } from '@payloadcms/next/withPayload'
 import type { NextConfig } from 'next'
 
-const SUPABASE_HOST = 'https://seswpytxueftfgvipzcb.supabase.co'
+const SUPABASE_HOST = new URL(process.env.S3_ENDPOINT!).origin
 
 const sharedHeaders = [
   { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
@@ -40,7 +40,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'seswpytxueftfgvipzcb.supabase.co',
+        hostname: new URL(process.env.S3_ENDPOINT!).hostname,
         pathname: '/storage/v1/object/public/**',
       },
     ],
