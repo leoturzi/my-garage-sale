@@ -54,8 +54,10 @@ export default buildConfig({
     s3Storage({
       collections: {
         media: {
-          generateFileURL: ({ filename }) =>
-            `${process.env.S3_ENDPOINT}/object/public/${process.env.S3_BUCKET}/${filename}`,
+          generateFileURL: ({ filename }) => {
+            const storageBase = process.env.S3_ENDPOINT!.replace(/\/s3$/, '')
+            return `${storageBase}/object/public/${process.env.S3_BUCKET}/${filename}`
+          },
         },
       },
       bucket: process.env.S3_BUCKET!,
