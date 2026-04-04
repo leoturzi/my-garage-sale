@@ -35,8 +35,8 @@ export const es_AR = {
   description: 'Descripción',
   details: 'Detalles',
   shippingReturns: 'Envío y devoluciones',
-  shippingText: 'Ofrecemos envío en todos los pedidos. Los tiempos de entrega varían según tu ubicación.',
-  returnsText: 'Si un artículo no coincide con su descripción, contáctanos dentro de 14 días para una devolución sin inconvenientes. Los artículos deben estar en la misma condición que fueron recibidos.',
+  shippingText: 'Los productos no tienen devolucion.',
+  returnsText: 'En caso de que un artículo no coincida con su descripción, contáctanos dentro de 3 días para una devolución sin inconvenientes. Los artículos deben estar en la misma condición que fueron recibidos.',
   youMayAlsoLike: 'También te puede gustar',
   recentlyViewed: 'Visto recientemente',
 
@@ -73,7 +73,7 @@ export const es_AR = {
   trustBadges: [
     { icon: '✓', title: 'Totalmente Auténtico', description: 'Cada artículo verificado genuino' },
     { icon: '★', title: 'Verificado de Calidad', description: 'Inspeccionado antes de publicar' },
-    { icon: '↩', title: 'Devoluciones Fáciles', description: 'Política de devolución sin inconvenientes' },
+    { icon: '↩', title: 'Ventas Fáciles', description: 'Sin complicaciones, ni intermediarios' },
     { icon: '🔒', title: 'Sin Costos Ocultos', description: 'Lo que ves es lo que pagas' },
   ],
 
@@ -82,19 +82,15 @@ export const es_AR = {
   faqs: [
     {
       title: '¿Cómo compro un artículo?',
-      content: 'Explora nuestra colección y selecciona los artículos que te interesen. También puedes escribirnos directamente por WhatsApp para una compra más rápida.',
+      content: 'Explora nuestra colección y selecciona los artículos que te interesen, luego contáctanos por WhatsApp para finalizar tu compra. ¡Es así de fácil!',
     },
     {
       title: '¿Qué significan las calificaciones de condición?',
       content: 'Calificamos cada artículo honestamente. "Nuevo" significa sin usar con etiquetas. "Como Nuevo" significa usado una o dos veces sin signos visibles de desgaste. "Bueno" significa ligeramente usado con signos menores de desgaste. "Regular" significa desgaste notable pero en buen estado.',
     },
     {
-      title: '¿Ofrecen envío?',
-      content: '¡Sí! Ofrecemos envío en todos los pedidos. Los tiempos de entrega varían según tu ubicación. Envío gratis disponible en pedidos seleccionados.',
-    },
-    {
       title: '¿Puedo devolver un artículo?',
-      content: 'Queremos que estés feliz con tu compra. Si un artículo no coincide con su descripción, contáctanos dentro de 14 días para una devolución. Los artículos deben estar en la misma condición que fueron recibidos.',
+      content: 'Los articulos estan en liquidacion, por lo que no aceptamos devoluciones. ',
     },
     {
       title: '¿Todos los artículos son auténticos?',
