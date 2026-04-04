@@ -19,5 +19,23 @@ export const Settings: GlobalConfig = {
       name: 'store_name',
       type: 'text',
     },
+    {
+      name: 'logo_desktop',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Logo displayed on desktop viewports. Recommended: PNG with transparency, ~600px wide.',
+      },
+    },
+    {
+      name: 'logo_mobile',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description:
+          'Logo displayed on mobile viewports. Recommended: PNG with transparency, ~300px wide.',
+      },
+    },
   ],
 }
