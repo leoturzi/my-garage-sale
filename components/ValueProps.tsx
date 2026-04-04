@@ -1,6 +1,6 @@
 const items = [
   { icon: '✓', title: 'Authentic', description: 'Every item verified genuine' },
-  { icon: '€', title: 'Great Prices', description: 'Unbeatable deals on quality goods' },
+  { icon: '$', title: 'Great Prices', description: 'Unbeatable deals on quality goods' },
   { icon: '💬', title: 'WhatsApp Direct', description: 'Message us to buy instantly' },
   { icon: '★', title: 'Quality Checked', description: 'Inspected before listing' },
 ]

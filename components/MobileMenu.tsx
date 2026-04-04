@@ -1,14 +1,18 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
+import type { LogoProp } from './Header'
 
 export function MobileMenu({
   storeName,
   navLinks,
+  logo,
 }: {
   storeName: string
   navLinks: { label: string; href: string }[]
+  logo?: LogoProp
 }) {
   const [open, setOpen] = useState(false)
 
@@ -44,9 +48,19 @@ export function MobileMenu({
           {/* Slide-out panel */}
           <div className="relative w-72 bg-white h-full shadow-xl flex flex-col">
             <div className="flex items-center justify-between p-4 border-b border-gray-200">
-              <span className="font-bold uppercase tracking-wider">
-                {storeName}
-              </span>
+              {logo?.mobile?.url ? (
+                <Image
+                  src={logo.mobile.url}
+                  alt={logo.mobile.alt || storeName}
+                  width={logo.mobile.width || 200}
+                  height={logo.mobile.height || 60}
+                  className="h-7 w-auto max-w-[160px]"
+                />
+              ) : (
+                <span className="font-bold uppercase tracking-wider">
+                  {storeName}
+                </span>
+              )}
               <button
                 onClick={() => setOpen(false)}
                 aria-label="Close menu"

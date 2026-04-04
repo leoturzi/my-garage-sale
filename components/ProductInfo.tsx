@@ -44,7 +44,7 @@ export function ProductInfo({
       </div>
 
       {/* Price */}
-      <p className="text-2xl font-bold">&euro;{product.price}</p>
+      <p className="text-2xl font-bold">${product.price}</p>
 
       {/* Size (if present) */}
       {product.size && (

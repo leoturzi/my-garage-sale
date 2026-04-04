@@ -1,8 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import type { Category } from '@/lib/types'
+import type { LogoProp } from './Header'
 import { Accordion } from '@/components/Accordion'
 
 const helpLinks = [
@@ -15,10 +17,12 @@ export function Footer({
   storeName,
   whatsappNumber,
   categories,
+  logo,
 }: {
   storeName: string
   whatsappNumber?: string
   categories: Category[]
+  logo?: LogoProp
 }) {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
@@ -121,13 +125,33 @@ export function Footer({
       <div className="mx-auto max-w-7xl px-4 py-8 md:py-12">
         {/* Mobile */}
         <div className="md:hidden">
-          <span className="mb-6 block text-lg font-bold uppercase tracking-wider">{storeName}</span>
+          <div className="mb-6 flex justify-center items-center gap-2">
+            {logo?.desktop?.url && (
+              <Image
+                src={logo.desktop.url}
+                alt={logo.desktop.alt || storeName}
+                width={logo.desktop.width || 200}
+                height={logo.desktop.height || 60}
+                className="h-10 w-auto"
+              />
+            )}
+            <span className="text-lg font-bold uppercase tracking-wider">{storeName}</span>
+          </div>
           <Accordion items={sitemapItems} />
         </div>
 
         {/* Desktop */}
         <div className="hidden md:grid md:grid-cols-4 md:gap-8">
-          <div>
+          <div className="flex items-center gap-2">
+            {logo?.desktop?.url && (
+              <Image
+                src={logo.desktop.url}
+                alt={logo.desktop.alt || storeName}
+                width={logo.desktop.width || 200}
+                height={logo.desktop.height || 60}
+                className="h-10 w-auto"
+              />
+            )}
             <span className="text-lg font-bold uppercase tracking-wider">{storeName}</span>
           </div>
           {sitemapItems.map((section) => (
