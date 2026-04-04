@@ -1,11 +1,7 @@
-const items = [
-  { icon: '✓', title: 'Authentic', description: 'Every item verified genuine' },
-  { icon: '$', title: 'Great Prices', description: 'Unbeatable deals on quality goods' },
-  { icon: '💬', title: 'WhatsApp Direct', description: 'Message us to buy instantly' },
-  { icon: '★', title: 'Quality Checked', description: 'Inspected before listing' },
-]
+import { es_AR } from '@/lib/translations'
 
 export function ValueProps() {
+  const items = es_AR.valueProps
   return (
     <section className="bg-surface py-10">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 lg:grid-cols-4 gap-6">

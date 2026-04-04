@@ -6,6 +6,7 @@ import { ValueProps } from '@/components/ValueProps'
 import { ProductGrid } from '@/components/ProductGrid'
 import { BrandMarquee } from '@/components/BrandMarquee'
 import { SpotlightSection } from '@/components/SpotlightSection'
+import { es_AR } from '@/lib/translations'
 
 export const revalidate = 60
 
@@ -50,10 +51,10 @@ export default async function Home() {
       <HeroSection hero={hero} />
       <CategoryGrid categories={categories} />
       <ValueProps />
-      <ProductGrid title="Just Added" ctaLabel="View All" ctaHref="/categories" products={justAdded} />
+      <ProductGrid title={es_AR.justAdded} ctaLabel={es_AR.viewAll} ctaHref={es_AR.viewAllHref} products={justAdded} />
       <BrandMarquee brands={brands} />
       <SpotlightSection categories={spotlightCategories} />
-      <ProductGrid title="On Sale" products={saleProducts} />
+      <ProductGrid title={es_AR.onSale} products={saleProducts} />
     </>
   )
 }
