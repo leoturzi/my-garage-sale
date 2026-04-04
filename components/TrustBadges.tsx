@@ -1,11 +1,7 @@
-const badges = [
-  { icon: '✓', title: 'Fully Authentic', description: 'Every item verified genuine' },
-  { icon: '★', title: 'Quality Checked', description: 'Inspected before listing' },
-  { icon: '↩', title: 'Easy Returns', description: 'Hassle-free return policy' },
-  { icon: '🔒', title: 'No Hidden Fees', description: 'What you see is what you pay' },
-]
+import { es_AR } from '@/lib/translations'
 
 export function TrustBadges() {
+  const badges = es_AR.trustBadges
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 py-8 border-y border-gray-200">
       {badges.map((badge) => (

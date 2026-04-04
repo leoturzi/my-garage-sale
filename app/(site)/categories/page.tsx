@@ -3,12 +3,13 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Category } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { CategoryCard } from '@/components/CategoryCard'
+import { es_AR } from '@/lib/translations'
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Categories | My Garage Sale',
-  description: 'Browse all categories — quality second-hand items at great prices.',
+  title: es_AR.categoriesPageTitle,
+  description: es_AR.categoriesPageDescription,
 }
 
 export default async function CategoriesPage() {
@@ -25,13 +26,13 @@ export default async function CategoriesPage() {
     <div className="max-w-7xl mx-auto px-4">
       <Breadcrumbs
         items={[
-          { label: 'Home', href: '/' },
-          { label: 'Categories' },
+          { label: es_AR.home, href: '/' },
+          { label: es_AR.categories },
         ]}
       />
 
       <div className="pb-4">
-        <h1 className="text-2xl font-bold uppercase tracking-wide">All Categories</h1>
+        <h1 className="text-2xl font-bold uppercase tracking-wide">{es_AR.allCategories}</h1>
       </div>
 
       {categories.length > 0 ? (
@@ -41,7 +42,7 @@ export default async function CategoriesPage() {
           ))}
         </div>
       ) : (
-        <p className="text-muted py-12 text-center">No categories yet.</p>
+        <p className="text-muted py-12 text-center">{es_AR.noCategoriesYet}</p>
       )}
     </div>
   )

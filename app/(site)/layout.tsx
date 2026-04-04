@@ -6,6 +6,7 @@ import type { Category, Media, SettingsData } from '@/lib/types'
 import { AnnouncementBar } from '@/components/AnnouncementBar'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { es_AR } from '@/lib/translations'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -14,15 +15,11 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL!),
-  title: 'My Garage Sale',
-  description: 'Quality second-hand items at unbeatable prices',
+  title: es_AR.siteName,
+  description: es_AR.siteDescription,
 }
 
-const announcementMessages = [
-  'Free local delivery on orders over $50',
-  'New items added weekly',
-  'Message us on WhatsApp to buy',
-]
+const announcementMessages = es_AR.announcements
 
 export default async function RootLayout({
   children,
