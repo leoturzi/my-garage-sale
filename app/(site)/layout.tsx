@@ -47,6 +47,7 @@ export default async function RootLayout({
         <Footer
           storeName={storeName}
           whatsappNumber={settings.whatsapp_number}
+          categories={categories}
         />
       </body>
     </html>
