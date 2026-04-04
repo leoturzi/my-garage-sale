@@ -125,34 +125,34 @@ export function Footer({
       <div className="mx-auto max-w-7xl px-4 py-8 md:py-12">
         {/* Mobile */}
         <div className="md:hidden">
-          {logo?.desktop?.url ? (
-            <Image
-              src={logo.desktop.url}
-              alt={logo.desktop.alt || storeName}
-              width={logo.desktop.width || 200}
-              height={logo.desktop.height || 60}
-              className="mb-6 h-8 w-auto max-w-[200px] brightness-0 invert"
-            />
-          ) : (
-            <span className="mb-6 block text-lg font-bold uppercase tracking-wider">{storeName}</span>
-          )}
-          <Accordion items={sitemapItems} />
-        </div>
-
-        {/* Desktop */}
-        <div className="hidden md:grid md:grid-cols-4 md:gap-8">
-          <div>
-            {logo?.desktop?.url ? (
+          <div className="mb-6 flex justify-center items-center gap-2">
+            {logo?.desktop?.url && (
               <Image
                 src={logo.desktop.url}
                 alt={logo.desktop.alt || storeName}
                 width={logo.desktop.width || 200}
                 height={logo.desktop.height || 60}
-                className="h-8 w-auto max-w-[200px] brightness-0 invert"
+                className="h-10 w-auto"
               />
-            ) : (
-              <span className="text-lg font-bold uppercase tracking-wider">{storeName}</span>
             )}
+            <span className="text-lg font-bold uppercase tracking-wider">{storeName}</span>
+          </div>
+          <Accordion items={sitemapItems} />
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden md:grid md:grid-cols-4 md:gap-8">
+          <div className="flex items-center gap-2">
+            {logo?.desktop?.url && (
+              <Image
+                src={logo.desktop.url}
+                alt={logo.desktop.alt || storeName}
+                width={logo.desktop.width || 200}
+                height={logo.desktop.height || 60}
+                className="h-10 w-auto"
+              />
+            )}
+            <span className="text-lg font-bold uppercase tracking-wider">{storeName}</span>
           </div>
           {sitemapItems.map((section) => (
             <div key={section.title}>

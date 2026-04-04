@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 const announcementMessages = [
-  'Free local delivery on orders over €50',
+  'Free local delivery on orders over $50',
   'New items added weekly',
   'Message us on WhatsApp to buy',
 ]
