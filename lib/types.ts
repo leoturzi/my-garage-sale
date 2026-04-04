@@ -2,6 +2,8 @@ export interface Media {
   id: number
   alt: string
   url?: string
+  width?: number
+  height?: number
   sizes?: {
     thumbnail?: { url?: string; width?: number; height?: number }
     card?: { url?: string; width?: number; height?: number }
@@ -44,4 +46,6 @@ export interface HeroData {
 export interface SettingsData {
   store_name?: string
   whatsapp_number?: string
+  logo_desktop?: Media | number
+  logo_mobile?: Media | number
 }

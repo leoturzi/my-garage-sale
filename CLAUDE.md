@@ -23,9 +23,17 @@ All tasks live on the Trello board (ID: `kKHQBiTG`). Lists:
 
 Use the `trello-api` skill for all board operations. Credentials (`TRELLO_API_KEY`, `TRELLO_TOKEN`) are in `.env.local`.
 
+| Label | ID | Behavior |
+|-------|----|----------|
+| Human Task | `69c82cf2f6f0724bfb164193` | Skip — requires human action, not Claude |
+
+When retrieving cards from any list, exclude cards labeled **Human Task** (label ID `69c82cf2f6f0724bfb164193`). Do not pick, plan, or work on these cards.
+
 ### Per task
 
-1. **Pick the task** — read the card in Backlog for technical details.
+**IMPORTANT: Never write code or make changes before completing steps 1–4. This applies to ALL work, including tasks the user asks for directly in conversation. No exceptions — even if the user describes the task verbally instead of pointing to a Trello card, you must create a card and follow the full workflow before touching any code.**
+
+1. **Pick or create the task** — if the task comes from Backlog, read the card for details. If the user asks for something new that has no card, create a card in Backlog first.
 2. **Move card to In Progress** — update `idList` to the In Progress list ID.
 3. **Sync with develop** — always `git checkout develop && git pull` before starting any work (new branch or existing).
 4. **Create or rebase branch** — new task: branch from up-to-date `develop`. Existing branch: `git rebase develop`. Use worktrees for parallel work.

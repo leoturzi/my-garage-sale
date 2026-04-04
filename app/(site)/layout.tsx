@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
 import { getPayloadClient } from '@/lib/payload'
-import type { Category, SettingsData } from '@/lib/types'
+import type { Category, Media, SettingsData } from '@/lib/types'
 import { AnnouncementBar } from '@/components/AnnouncementBar'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 }
 
 const announcementMessages = [
-  'Free local delivery on orders over €50',
+  'Free local delivery on orders over $50',
   'New items added weekly',
   'Message us on WhatsApp to buy',
 ]
@@ -38,16 +38,27 @@ export default async function RootLayout({
   const categories = categoriesRaw.docs as unknown as Category[]
   const storeName = settings.store_name || 'My Garage Sale'
 
+  function resolveMedia(field: Media | number | undefined) {
+    if (!field || typeof field === 'number') return null
+    return { url: field.url, alt: field.alt, width: field.width, height: field.height }
+  }
+
+  const logo = {
+    desktop: resolveMedia(settings.logo_desktop),
+    mobile: resolveMedia(settings.logo_mobile),
+  }
+
   return (
     <html lang="en">
       <body className={`${geistSans.variable} antialiased`}>
         <AnnouncementBar messages={announcementMessages} />
-        <Header storeName={storeName} categories={categories} />
+        <Header storeName={storeName} categories={categories} logo={logo} />
         <main>{children}</main>
         <Footer
           storeName={storeName}
           whatsappNumber={settings.whatsapp_number}
           categories={categories}
+          logo={logo}
         />
       </body>
     </html>

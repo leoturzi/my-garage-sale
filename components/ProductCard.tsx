@@ -73,7 +73,7 @@ export function ProductCard({ product }: { product: Product }) {
           {product.condition && product.size && <span>&middot;</span>}
           {product.size && <span>{product.size}</span>}
         </div>
-        <p className="text-sm font-semibold">&euro;{product.price}</p>
+        <p className="text-sm font-semibold">${product.price}</p>
       </div>
     </Link>
   )
