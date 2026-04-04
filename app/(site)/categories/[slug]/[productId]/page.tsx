@@ -10,6 +10,7 @@ import { Accordion } from '@/components/Accordion'
 import { ProductGrid } from '@/components/ProductGrid'
 import { ReviewsSection } from '@/components/ReviewsSection'
 import { FAQSection } from '@/components/FAQSection'
+import { es_AR } from '@/lib/translations'
 
 export const revalidate = 60
 export const dynamicParams = true
@@ -33,9 +34,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
     const ogImageUrl = firstImage?.sizes?.card?.url ?? firstImage?.url
 
-    const title = `${product.name} | My Garage Sale`
+    const title = `${product.name} | Mi Venta de Garaje`
     const description =
-      product.description?.slice(0, 160) ?? `${product.name} — available at My Garage Sale`
+      product.description?.slice(0, 160) ?? `${product.name} ${es_AR.availableAt}`
 
     return {
       title,
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       },
     }
   } catch {
-    return { title: 'Product Not Found' }
+    return { title: es_AR.productNotFound }
   }
 }
 
@@ -123,14 +124,14 @@ export default async function ProductPage({ params }: PageProps) {
   const accordionItems = [
     product.description
       ? {
-        title: 'Description',
+        title: es_AR.description,
         defaultOpen: true,
         content: <p className="whitespace-pre-line">{product.description}</p>,
       }
       : null,
     product.details && product.details.length > 0
       ? {
-        title: 'Details',
+        title: es_AR.details,
         content: (
           <div className="grid grid-cols-2 gap-x-8 gap-y-2">
             {product.details.map((d, i) => (
@@ -144,14 +145,11 @@ export default async function ProductPage({ params }: PageProps) {
       }
       : null,
     {
-      title: 'Shipping & Returns',
+      title: es_AR.shippingReturns,
       content: (
         <div className="space-y-3">
-          <p>We offer shipping on all orders. Delivery times vary depending on your location.</p>
-          <p>
-            If an item doesn&apos;t match its description, contact us within 14 days for a
-            hassle-free return. Items must be in the same condition as received.
-          </p>
+          <p>{es_AR.shippingText}</p>
+          <p>{es_AR.returnsText}</p>
         </div>
       ),
     },
@@ -162,7 +160,7 @@ export default async function ProductPage({ params }: PageProps) {
       {/* Breadcrumbs */}
       <Breadcrumbs
         items={[
-          { label: 'Home', href: '/' },
+          { label: es_AR.home, href: '/' },
           { label: category.name, href: `/categories/${category.slug}` },
           { label: product.name },
         ]}
@@ -190,10 +188,10 @@ export default async function ProductPage({ params }: PageProps) {
       <ReviewsSection />
 
       {/* You May Also Like */}
-      <ProductGrid title="You May Also Like" products={relatedProducts} />
+      <ProductGrid title={es_AR.youMayAlsoLike} products={relatedProducts} />
 
       {/* Recently Viewed */}
-      <ProductGrid title="Recently Viewed" products={recentProducts} />
+      <ProductGrid title={es_AR.recentlyViewed} products={recentProducts} />
 
       {/* FAQ */}
       <FAQSection />
