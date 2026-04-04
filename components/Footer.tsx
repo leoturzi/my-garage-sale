@@ -3,50 +3,13 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import type { Category } from '@/lib/types'
+import { Accordion } from '@/components/Accordion'
 
 const helpLinks = [
   { label: 'Preguntas frecuentes', href: '#faq' },
   { label: 'Envíos', href: '#' },
   { label: 'Devoluciones', href: '#' },
 ]
-
-function FooterSection({
-  title,
-  children,
-}: {
-  title: string
-  children: React.ReactNode
-}) {
-  const [open, setOpen] = useState(false)
-
-  return (
-    <div className="border-t border-white/10 md:border-0">
-      <button
-        className="flex w-full items-center justify-between py-4 text-left md:hidden"
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span className="text-sm font-semibold uppercase tracking-wider">{title}</span>
-        <svg
-          className={`h-4 w-4 shrink-0 transition-transform ${open ? 'rotate-45' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-        </svg>
-      </button>
-      <h4 className="mb-4 hidden text-sm font-semibold uppercase tracking-wider md:block">{title}</h4>
-      <div
-        className={`overflow-hidden transition-[max-height] duration-300 md:overflow-visible md:![max-height:none] ${
-          open ? 'max-h-96' : 'max-h-0'
-        }`}
-      >
-        <div className="pb-4 md:pb-0">{children}</div>
-      </div>
-    </div>
-  )
-}
 
 export function Footer({
   storeName,
@@ -66,6 +29,59 @@ export function Footer({
     setSubscribed(true)
     setEmail('')
   }
+
+  const sitemapItems = [
+    {
+      title: 'Categorías',
+      content: (
+        <ul className="space-y-2">
+          {categories.map((cat) => (
+            <li key={cat.id}>
+              <Link
+                href={`/categories/${cat.slug}`}
+                className="text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                {cat.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      title: 'Ayuda',
+      content: (
+        <ul className="space-y-2">
+          {helpLinks.map((link) => (
+            <li key={link.label}>
+              <a href={link.href} className="text-sm text-gray-400 transition-colors hover:text-white">
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      title: 'Contacto',
+      content: (
+        <ul className="space-y-2">
+          {whatsappNumber && (
+            <li>
+              <a
+                href={`https://wa.me/${whatsappNumber}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-gray-400 transition-colors hover:text-white"
+              >
+                WhatsApp
+              </a>
+            </li>
+          )}
+        </ul>
+      ),
+    },
+  ]
 
   return (
     <footer className="bg-accent text-white">
@@ -101,63 +117,25 @@ export function Footer({
         </div>
       </div>
 
-      {/* Sitemap */}
+      {/* Sitemap — mobile: accordion, desktop: columns */}
       <div className="mx-auto max-w-7xl px-4 py-8 md:py-12">
-        <div className="md:grid md:grid-cols-4 md:gap-8">
-          {/* Brand */}
-          <div className="mb-6 md:mb-0">
+        {/* Mobile */}
+        <div className="md:hidden">
+          <span className="mb-6 block text-lg font-bold uppercase tracking-wider">{storeName}</span>
+          <Accordion items={sitemapItems} />
+        </div>
+
+        {/* Desktop */}
+        <div className="hidden md:grid md:grid-cols-4 md:gap-8">
+          <div>
             <span className="text-lg font-bold uppercase tracking-wider">{storeName}</span>
           </div>
-
-          {/* Categorías */}
-          <FooterSection title="Categorías">
-            <ul className="space-y-2">
-              {categories.map((cat) => (
-                <li key={cat.id}>
-                  <Link
-                    href={`/categories/${cat.slug}`}
-                    className="text-sm text-gray-400 transition-colors hover:text-white"
-                  >
-                    {cat.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </FooterSection>
-
-          {/* Ayuda */}
-          <FooterSection title="Ayuda">
-            <ul className="space-y-2">
-              {helpLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-gray-400 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </FooterSection>
-
-          {/* Contacto */}
-          <FooterSection title="Contacto">
-            <ul className="space-y-2">
-              {whatsappNumber && (
-                <li>
-                  <a
-                    href={`https://wa.me/${whatsappNumber}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-gray-400 transition-colors hover:text-white"
-                  >
-                    WhatsApp
-                  </a>
-                </li>
-              )}
-            </ul>
-          </FooterSection>
+          {sitemapItems.map((section) => (
+            <div key={section.title}>
+              <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider">{section.title}</h4>
+              {section.content}
+            </div>
+          ))}
         </div>
       </div>
 
