@@ -27,6 +27,12 @@ export const SiteContent: GlobalConfig = {
           maxRows: 3,
           admin: {
             description: 'Hasta 3 mensajes que se desplazan en la barra superior.',
+            components: {
+              RowLabel: {
+                path: '@/components/admin/RowLabel',
+                clientProps: { fieldName: 'text', fallbackPrefix: 'Mensaje' },
+              },
+            },
           },
           fields: [
             {
@@ -48,6 +54,14 @@ export const SiteContent: GlobalConfig = {
           name: 'sections',
           type: 'array',
           label: 'Secciones',
+          admin: {
+            components: {
+              RowLabel: {
+                path: '@/components/admin/RowLabel',
+                clientProps: { fieldName: 'title', fallbackPrefix: 'Sección' },
+              },
+            },
+          },
           fields: [
             {
               name: 'title',
@@ -65,6 +79,14 @@ export const SiteContent: GlobalConfig = {
               name: 'questions',
               type: 'array',
               label: 'Preguntas',
+              admin: {
+                components: {
+                  RowLabel: {
+                    path: '@/components/admin/RowLabel',
+                    clientProps: { fieldName: 'question', fallbackPrefix: 'Pregunta' },
+                  },
+                },
+              },
               fields: [
                 {
                   name: 'question',
