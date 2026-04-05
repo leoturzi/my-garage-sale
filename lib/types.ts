@@ -49,3 +49,17 @@ export interface SettingsData {
   logo_desktop?: Media | number
   logo_mobile?: Media | number
 }
+
+export interface SiteContentData {
+  marquee?: {
+    enabled?: boolean
+    messages?: { text: string }[]
+  }
+  faq?: {
+    sections?: {
+      title: string
+      show_on_product_page?: boolean
+      questions?: { question: string; answer: string }[]
+    }[]
+  }
+}

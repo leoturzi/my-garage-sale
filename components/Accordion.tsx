@@ -37,13 +37,13 @@ export function Accordion({ items }: { items: AccordionItem[] }) {
           <div key={i}>
             <button
               onClick={() => toggle(i)}
-              className="flex items-center justify-between w-full py-4 text-left"
+              className="flex items-start justify-between w-full py-4 text-left gap-4"
             >
               <span className="text-sm font-semibold uppercase tracking-wider">
                 {item.title}
               </span>
               <svg
-                className={`w-4 h-4 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+                className={`w-4 h-4 shrink-0 mt-0.5 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

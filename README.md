@@ -39,7 +39,7 @@ app/
         ├── [slug]/page.tsx             # Products in a category
         └── [slug]/[productId]/page.tsx # Product detail page (PDP)
 collections/            # Payload collection definitions (Categories, Products, Media, Users)
-globals/                # Payload globals (Hero, Settings)
+globals/                # Payload globals (Hero, Settings, SiteContent)
 components/             # UI components (site + admin)
 lib/                    # Payload client, types, access helpers
 payload.config.ts       # Payload config (DB, collections, editor)
