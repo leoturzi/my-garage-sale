@@ -31,6 +31,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  admin: {
+    components: {
+      providers: ['/components/admin/PasswordToggleProvider#PasswordToggleProvider'],
+    },
+  },
   editor: lexicalEditor(),
   collections: [Users, Media, Categories, Products],
   globals: [Hero, Settings],
