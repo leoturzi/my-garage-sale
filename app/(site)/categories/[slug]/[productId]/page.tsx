@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { getPayloadClient } from '@/lib/payload'
-import type { Product, Category, Media, SettingsData } from '@/lib/types'
+import type { Product, Category, Media, SettingsData, SiteContentData } from '@/lib/types'
 import { Breadcrumbs } from '@/components/Breadcrumbs'
 import { ProductImages } from '@/components/ProductImages'
 import { ProductInfo } from '@/components/ProductInfo'
@@ -89,9 +89,11 @@ export default async function ProductPage({ params }: PageProps) {
   // Validate that the slug matches the product's category
   if (category.slug !== slug) notFound()
 
-  // 3. Fetch settings for WhatsApp number
+  // 3. Fetch settings and site content
   const settingsRaw = await payload.findGlobal({ slug: 'settings' })
+  const siteContentRaw = await payload.findGlobal({ slug: 'site-content' })
   const settings = settingsRaw as unknown as SettingsData
+  const siteContent = siteContentRaw as unknown as SiteContentData
 
   // 4. Fetch related products (same category, excluding current)
   const relatedRaw = await payload.find({
@@ -117,6 +119,19 @@ export default async function ProductPage({ params }: PageProps) {
     sort: '-createdAt',
   })
   const recentProducts = recentRaw.docs as unknown as Product[]
+
+  // Prepare FAQ sections for product page
+  const productFaqSections = (siteContent.faq?.sections ?? [])
+    .filter((s) => s.show_on_product_page)
+    .map((s) => ({
+      title: s.title,
+      questions: s.questions,
+    }))
+
+  // Fallback to hardcoded FAQs if no CMS sections configured
+  const faqSections = productFaqSections.length > 0
+    ? productFaqSections
+    : [{ title: es_AR.faqTitle, questions: es_AR.faqs.map((f) => ({ question: f.title, answer: f.content })) }]
 
   // Prepare data
   const images = resolveImages(product.images)
@@ -194,7 +209,7 @@ export default async function ProductPage({ params }: PageProps) {
       <ProductGrid title={es_AR.recentlyViewed} products={recentProducts} />
 
       {/* FAQ */}
-      <FAQSection />
+      <FAQSection sections={faqSections} />
     </div>
   )
 }

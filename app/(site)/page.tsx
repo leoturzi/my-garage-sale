@@ -4,7 +4,6 @@ import { HeroSection } from '@/components/HeroSection'
 import { CategoryGrid } from '@/components/CategoryGrid'
 import { ValueProps } from '@/components/ValueProps'
 import { ProductGrid } from '@/components/ProductGrid'
-import { BrandMarquee } from '@/components/BrandMarquee'
 import { SpotlightSection } from '@/components/SpotlightSection'
 import { es_AR } from '@/lib/translations'
 
@@ -52,7 +51,6 @@ export default async function Home() {
       <CategoryGrid categories={categories} />
       <ValueProps />
       <ProductGrid title={es_AR.justAdded} ctaLabel={es_AR.viewAll} ctaHref={es_AR.viewAllHref} products={justAdded} />
-      <BrandMarquee brands={brands} />
       <SpotlightSection categories={spotlightCategories} />
       <ProductGrid title={es_AR.onSale} products={saleProducts} />
     </>

@@ -11,6 +11,7 @@ import { Categories } from './collections/Categories.ts'
 import { Products } from './collections/Products.ts'
 import { Hero } from './globals/Hero.ts'
 import { Settings } from './globals/Settings.ts'
+import { SiteContent } from './globals/SiteContent.ts'
 
 const requiredEnv = [
   'DATABASE_URI',
@@ -38,7 +39,7 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   collections: [Users, Media, Categories, Products],
-  globals: [Hero, Settings],
+  globals: [Hero, Settings, SiteContent],
   secret: process.env.PAYLOAD_SECRET!,
   cors: [
     process.env.NEXT_PUBLIC_SITE_URL,
