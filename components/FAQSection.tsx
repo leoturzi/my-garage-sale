@@ -1,21 +1,31 @@
 import { SectionHeader } from './SectionHeader'
 import { Accordion } from './Accordion'
-import { es_AR } from '@/lib/translations'
 
-export function FAQSection() {
-  const faqs = es_AR.faqs
+interface FAQSection {
+  title: string
+  questions?: { question: string; answer: string }[]
+}
+
+export function FAQSection({ sections }: { sections: FAQSection[] }) {
+  if (sections.length === 0) return null
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
-      <SectionHeader title={es_AR.faqTitle} />
-      <div className="max-w-3xl">
-        <Accordion
-          items={faqs.map((faq) => ({
-            title: faq.title,
-            content: <p>{faq.content}</p>,
-          }))}
-        />
-      </div>
+      {sections.map((section, i) => (
+        <div key={i} className="mb-8 last:mb-0">
+          <SectionHeader title={section.title} />
+          {section.questions && section.questions.length > 0 && (
+            <div className="max-w-3xl">
+              <Accordion
+                items={section.questions.map((q) => ({
+                  title: q.question,
+                  content: <p>{q.answer}</p>,
+                }))}
+              />
+            </div>
+          )}
+        </div>
+      ))}
     </section>
   )
 }
