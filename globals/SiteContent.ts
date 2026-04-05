@@ -29,7 +29,7 @@ export const SiteContent: GlobalConfig = {
             description: 'Hasta 3 mensajes que se desplazan en la barra superior.',
             components: {
               RowLabel: {
-                path: '@/components/admin/RowLabel',
+                path: '@/components/admin/RowLabel#RowLabel',
                 clientProps: { fieldName: 'text', fallbackPrefix: 'Mensaje' },
               },
             },
@@ -57,7 +57,7 @@ export const SiteContent: GlobalConfig = {
           admin: {
             components: {
               RowLabel: {
-                path: '@/components/admin/RowLabel',
+                path: '@/components/admin/RowLabel#RowLabel',
                 clientProps: { fieldName: 'title', fallbackPrefix: 'Sección' },
               },
             },
@@ -82,7 +82,7 @@ export const SiteContent: GlobalConfig = {
               admin: {
                 components: {
                   RowLabel: {
-                    path: '@/components/admin/RowLabel',
+                    path: '@/components/admin/RowLabel#RowLabel',
                     clientProps: { fieldName: 'question', fallbackPrefix: 'Pregunta' },
                   },
                 },
