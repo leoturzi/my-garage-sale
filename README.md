@@ -2,7 +2,7 @@
 
 A clean, fast-loading public storefront for selling clothes and sneakers.
 
-**Stack:** Next.js 15 · Payload CMS v3 · Supabase (Postgres + Storage) · Tailwind CSS · Vercel
+**Stack:** Next.js 16 · Payload CMS v3 · Supabase (Postgres + Storage) · Tailwind CSS · Vercel
 
 ---
 
@@ -56,11 +56,13 @@ Each route group has its own root layout (`<html>/<body>`) to avoid hydration co
 
 Payload CMS v3 requires Node.js 22+. The project includes an `.nvmrc` file — run `nvm use` to switch.
 
-### Next.js version pinned to 15.4.11
+### Next.js and Payload versions move together
 
-Payload CMS v3 has a strict peer dependency on Next.js: `>=15.4.11 <15.5.0 || >=16.2.0-canary.10 <17.0.0`. The project is pinned to **15.4.11**.
+Payload CMS v3 has a strict peer dependency on Next.js (`@payloadcms/next@3.90.2`: `>=15.4.11 <15.5.0 || >=16.3.3 <17.0.0`) and on React (`^19.2.1`, no 19.3). The project pins **Next.js 16.3.7**, all `payload` / `@payloadcms/*` packages on the same version, and React to `~19.2.x`.
 
-When Payload releases support for a newer Next.js stable, upgrade both together.
+Upgrade Next.js and Payload together. If `npm install` fails with a Payload `ERESOLVE` peer conflict while bumping all `@payloadcms/*` packages, drop the `payload` / `@payloadcms/*` entries from `package-lock.json` and reinstall.
+
+The Payload CLI (`npx payload generate:*`) currently fails with `ERR_REQUIRE_ASYNC_MODULE` because the project isn't `"type": "module"`. `next dev` / `next build` regenerate `importMap.js` automatically.
 
 ### Supabase connection strings differ between local and production
 
