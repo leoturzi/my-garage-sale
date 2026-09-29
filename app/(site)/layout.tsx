@@ -1,6 +1,7 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Geist } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import { getPayloadClient } from '@/lib/payload'
 import type { Category, Media, SettingsData, SiteContentData } from '@/lib/types'
 import { AnnouncementBar } from '@/components/AnnouncementBar'
@@ -62,6 +63,7 @@ export default async function RootLayout({
           categories={categories}
           logo={logo}
         />
+        <Analytics />
       </body>
     </html>
   )
