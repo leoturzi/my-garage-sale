@@ -17,7 +17,7 @@ export function HeroSection({ hero }: { hero: HeroData }) {
           src={bgUrl}
           alt={hero.title ?? 'Hero'}
           fill
-          priority
+          preload
           sizes="100vw"
           className="object-cover"
         />

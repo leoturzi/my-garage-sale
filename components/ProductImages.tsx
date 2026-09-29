@@ -66,7 +66,7 @@ export function ProductImages({ images }: { images: CarouselImage[] }) {
             src={images[current].url}
             alt={images[current].alt}
             fill
-            priority={current === 0}
+            preload={current === 0}
             sizes="50vw"
             className="object-cover"
           />
@@ -107,7 +107,7 @@ export function ProductImages({ images }: { images: CarouselImage[] }) {
                   src={img.url}
                   alt={img.alt}
                   fill
-                  priority={i === 0}
+                  preload={i === 0}
                   sizes="100vw"
                   className="object-cover"
                 />
