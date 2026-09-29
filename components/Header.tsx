@@ -40,7 +40,7 @@ export function Header({
                 width={logo.mobile?.width || logo.desktop!.width || 200}
                 height={logo.mobile?.height || logo.desktop!.height || 60}
                 className="h-12 w-auto max-w-[300px] lg:hidden"
-                priority
+                preload
               />
               <Image
                 src={(logo.desktop?.url || logo.mobile!.url)!}
@@ -48,7 +48,7 @@ export function Header({
                 width={logo.desktop?.width || logo.mobile!.width || 200}
                 height={logo.desktop?.height || logo.mobile!.height || 60}
                 className="hidden lg:block h-16 w-auto max-w-[300px]"
-                priority
+                preload
               />
               <span className="text-lg lg:text-xl font-bold uppercase tracking-wider">
                 {storeName}
