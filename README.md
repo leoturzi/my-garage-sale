@@ -106,7 +106,8 @@ All required variables are validated at startup — the app will throw if any ar
 1. Connect the GitHub repo to a Vercel project.
 2. Set all environment variables above in the Vercel dashboard.
 3. Ensure the build command is `npm run build` and output directory is `.next`.
-4. Deploy — Vercel handles the rest.
+4. Enable **Web Analytics** in the Vercel project (Analytics tab). The public site layout renders `<Analytics />` from `@vercel/analytics/next`; the admin panel isn't tracked.
+5. Deploy — Vercel handles the rest.
 
 ### Security Model
 
